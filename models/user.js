@@ -25,6 +25,10 @@ const userSchema = Schema(
       type: String,
       require: true,
     },
+    balance: {
+      type: Number,
+      default: 0,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -33,6 +37,7 @@ const joiRegisterSchema = Joi.object({
   password: Joi.string().min(6).required(),
   email: Joi.string().email().required(),
   subscription: Joi.string(),
+  balance: Joi.number(),
 });
 
 const joiLoginSchema = Joi.object({
