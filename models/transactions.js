@@ -1,11 +1,53 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const transationsSchema = Schema(
+const incomeTransationsSchema = Schema(
   {
-    income: {
-      type: Boolean,
-      default: true,
+    type: {
+      type: String,
+      default: "income",
+    },
+    date: {
+      day: {
+        type: Date,
+        default: Date.now,
+      },
+      month: {
+        type: Date,
+        default: Date.now,
+      },
+      year: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+    description: {
+      type: String,
+      required: [true, "Description is required"],
+    },
+    category: {
+      type: String,
+      enum: ["salary", "other income"],
+      default: "salary",
+    },
+    sum: { type: Number, require: true },
+  },
+  { versionKey: false, timestamps: true }
+);
+
+const joiIncomeTransactionSchema = Joi.object({
+  type: Joi.string().required(),
+  date: Joi.object(),
+  description: Joi.string().required(),
+  category: Joi.string().required(),
+  sum: Joi.number().required(),
+});
+
+const costsTransationsSchema = Schema(
+  {
+    type: {
+      type: String,
+      default: "costs",
     },
     date: {
       day: {
@@ -47,17 +89,11 @@ const transationsSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-const joiTransactionSchema = Joi.object({
-  income: Joi.boolean().required(),
-  date: Joi.object(),
-  description: Joi.string().required(),
-  category: Joi.string().required(),
-  sum: Joi.number().required(),
-});
-
-const Transaction = model("transaction", transationsSchema);
+const IncomeTransaction = model("incomeTransaction", incomeTransationsSchema);
+const CostsTransaction = model("costsTransaction", costsTransationsSchema);
 
 module.exports = {
-  Transaction,
-  joiTransactionSchema,
+  IncomeTransaction,
+  joiIncomeTransactionSchema,
+  CostsTransaction,
 };

@@ -2,17 +2,23 @@ const express = require("express");
 
 const { auth, ctrlWrapper, validation } = require("../../middleware");
 const { transactions: ctrl } = require("../../controllers");
-const { joiTransactionSchema } = require("../../models/transactions");
+const { joiIncomeTransactionSchema } = require("../../models/transactions");
 
 const router = express.Router();
 
 // router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
 
 router.post(
-  "/",
+  "/income",
   auth,
-  validation(joiTransactionSchema),
-  ctrlWrapper(ctrl.addTransaction)
+  validation(joiIncomeTransactionSchema),
+  ctrlWrapper(ctrl.addIncomeTransaction)
+);
+router.post(
+  "/costs",
+  auth,
+  validation(joiIncomeTransactionSchema),
+  ctrlWrapper(ctrl.addCostsTransaction)
 );
 
 module.exports = router;
