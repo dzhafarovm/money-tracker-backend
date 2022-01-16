@@ -20,5 +20,8 @@ router.post(
   validation(joiIncomeTransactionSchema),
   ctrlWrapper(ctrl.addCostsTransaction)
 );
+router.delete("/:transactionId", ctrlWrapper(ctrl.removeTransactionById.removeIncomeById));
+router.delete("/:transactionId", ctrlWrapper(ctrl.removeTransactionById.removeCostById));
+
 
 module.exports = router;
