@@ -9,16 +9,16 @@ const incomeTransationsSchema = Schema(
     },
     date: {
       day: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: true,
       },
       month: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: true,
       },
       year: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: true,
       },
     },
     description: {
@@ -51,16 +51,16 @@ const costsTransationsSchema = Schema(
     },
     date: {
       day: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: true,
       },
       month: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: true,
       },
       year: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: true,
       },
     },
     description: {
