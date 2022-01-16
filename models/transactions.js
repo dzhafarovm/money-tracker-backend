@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const incomeTransationsSchema = Schema(
+const incomeTransactionSchema = Schema(
   {
     type: {
       type: String,
@@ -43,7 +43,7 @@ const joiIncomeTransactionSchema = Joi.object({
   sum: Joi.number().required(),
 });
 
-const costsTransationsSchema = Schema(
+const costsTransactionSchema = Schema(
   {
     type: {
       type: String,
@@ -89,8 +89,8 @@ const costsTransationsSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-const IncomeTransaction = model("incomeTransaction", incomeTransationsSchema);
-const CostsTransaction = model("costsTransaction", costsTransationsSchema);
+const IncomeTransaction = model("incomeTransaction", incomeTransactionSchema);
+const CostsTransaction = model("costsTransaction", costsTransactionSchema);
 
 module.exports = {
   IncomeTransaction,
