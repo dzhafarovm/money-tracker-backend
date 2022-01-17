@@ -5,7 +5,7 @@ const { transactions: ctrl } = require("../../controllers");
 const { joiTransactionSchema } = require("../../models/transactions");
 
 
-router.get("/", auth,ctrlWrapper(ctrl.getTransaction));
+router.get("/", auth,ctrlWrapper(ctrl.getTransactionByMonth));
 
 router.post("/",auth,validation(joiTransactionSchema),ctrlWrapper(ctrl.addTransaction));
 

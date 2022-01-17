@@ -1,10 +1,10 @@
 const { Transaction } = require("../../models");
 
 const getTransactionByMonth = async (req, res, next) => {
-    const { month } = req.params;
+    const { month } = req.transaction;
     const { page = 1, limit = 10 } = req.query;
     const skip = (page - 1) * limit;
-    const data = Transaction.find({ date: month }, '', { skip, limit: String(limit) })
+    const data = Transaction.find({ month }, '', { skip, limit: String(limit) })
         .populate('owner', 'month type category description');
     
     res.json({
@@ -14,6 +14,4 @@ const getTransactionByMonth = async (req, res, next) => {
     });
 };
 
-module.exports = {
-    getTransactionByMonth,
-};
+module.exports = getTransactionByMonth;
