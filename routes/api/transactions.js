@@ -6,7 +6,8 @@ const { joiIncomeTransactionSchema } = require("../../models/transactions");
 
 const router = express.Router();
 
-// router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
+router.get("/", auth, ctrlWrapper(ctrl.getTransaction.getIncomeByMonth));
+router.get("/", auth, ctrlWrapper(ctrl.getTransaction.getCostsByMonth));
 
 router.post(
   "/income",
