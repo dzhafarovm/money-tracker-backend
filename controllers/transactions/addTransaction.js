@@ -1,6 +1,6 @@
-const { CostsTransaction } = require("../../models");
+const { Transaction } = require("../../models");
 
-const addCostsTransaction = async (req, res) => {
+const addTransaction = async (req, res) => {
   const { _id } = req.user;
   const dateObj = new Date();
   const monthNames = [
@@ -20,10 +20,12 @@ const addCostsTransaction = async (req, res) => {
   const month = monthNames[dateObj.getMonth()];
   const day = String(dateObj.getDate()).padStart(2, "0");
   const year = dateObj.getFullYear();
-  const result = await CostsTransaction.create({
+  const result = await Transaction.create({
     ...req.body,
     owner: _id,
-    date: { day: day, month: month, year: year },
+    day: day,
+    month: month,
+    year: year,
   });
   res.status(201).json({
     status: "success",
@@ -34,4 +36,4 @@ const addCostsTransaction = async (req, res) => {
   });
 };
 
-module.exports = addCostsTransaction;
+module.exports = addTransaction;

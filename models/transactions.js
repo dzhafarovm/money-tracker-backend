@@ -1,13 +1,13 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const incomeTransactionSchema = Schema(
+const transactionSchema = Schema(
   {
     type: {
       type: String,
+      enum: ["income", "costs"],
       default: "income",
     },
-    date: {
       day: {
         type: String,
         required: true,
@@ -20,49 +20,6 @@ const incomeTransactionSchema = Schema(
         type: String,
         required: true,
       },
-    },
-    description: {
-      type: String,
-      required: [true, "Description is required"],
-    },
-    category: {
-      type: String,
-      enum: ["salary", "other income"],
-      default: "salary",
-    },
-    sum: { type: Number, require: true },
-  },
-  { versionKey: false, timestamps: true }
-);
-
-const joiIncomeTransactionSchema = Joi.object({
-  type: Joi.string().required(),
-  date: Joi.object(),
-  description: Joi.string().required(),
-  category: Joi.string().required(),
-  sum: Joi.number().required(),
-});
-
-const costsTransactionSchema = Schema(
-  {
-    type: {
-      type: String,
-      default: "costs",
-    },
-    date: {
-      day: {
-        type: String,
-        required: true,
-      },
-      month: {
-        type: String,
-        required: true,
-      },
-      year: {
-        type: String,
-        required: true,
-      },
-    },
     description: {
       type: String,
       required: [true, "Description is required"],
@@ -70,6 +27,8 @@ const costsTransactionSchema = Schema(
     category: {
       type: String,
       enum: [
+        "salary",
+        "other income",
         "products",
         "alcohol",
         "fun",
@@ -82,18 +41,27 @@ const costsTransactionSchema = Schema(
         "education",
         "other",
       ],
-      default: "products",
+      default: "salary",
     },
     sum: { type: Number, require: true },
   },
   { versionKey: false, timestamps: true }
 );
 
-const IncomeTransaction = model("incomeTransaction", incomeTransactionSchema);
-const CostsTransaction = model("costsTransaction", costsTransactionSchema);
+const joiTransactionSchema = Joi.object({
+  type: Joi.string().required(),
+  day: Joi.string(),
+  month: Joi.string(),
+  year: Joi.string(),
+  description: Joi.string().required(),
+  category: Joi.string().required(),
+  sum: Joi.number().required(),
+});
+
+
+const Transaction = model("transaction", transactionSchema);
 
 module.exports = {
-  IncomeTransaction,
-  joiIncomeTransactionSchema,
-  CostsTransaction,
+  Transaction,
+  joiTransactionSchema,
 };

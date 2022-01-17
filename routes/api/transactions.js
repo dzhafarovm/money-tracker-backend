@@ -1,28 +1,15 @@
-const express = require("express");
+const router = require("express").Router();
 
 const { auth, ctrlWrapper, validation } = require("../../middleware");
 const { transactions: ctrl } = require("../../controllers");
-const { joiIncomeTransactionSchema } = require("../../models/transactions");
+const { joiTransactionSchema } = require("../../models/transactions");
 
-const router = express.Router();
 
-router.get("/", auth, ctrlWrapper(ctrl.getTransaction.getIncomeByMonth));
-router.get("/", auth, ctrlWrapper(ctrl.getTransaction.getCostsByMonth));
+router.get("/", auth,ctrlWrapper(ctrl.getTransaction));
 
-router.post(
-  "/income",
-  auth,
-  validation(joiIncomeTransactionSchema),
-  ctrlWrapper(ctrl.addIncomeTransaction)
-);
-router.post(
-  "/costs",
-  auth,
-  validation(joiIncomeTransactionSchema),
-  ctrlWrapper(ctrl.addCostsTransaction)
-);
-router.delete("/:transactionId", ctrlWrapper(ctrl.removeTransactionById.removeIncomeById));
-router.delete("/:transactionId", ctrlWrapper(ctrl.removeTransactionById.removeCostById));
+router.post("/",auth,validation(joiTransactionSchema),ctrlWrapper(ctrl.addTransaction));
+
+router.delete("/:transactionId", ctrlWrapper(ctrl.removeTransactionById));
 
 
 module.exports = router;
