@@ -27,7 +27,9 @@ const googleRedirect = async (req, res) => {
     const urlObj = new URL(fullUrl);
     const urlParams = queryString.parse(urlObj.search);
     const code = urlParams.code;
+
     console.log(code);
+
     const tokenData = await axios({
         url: "https://oauth2.googleapis.com/token",
         method: "post",
@@ -46,36 +48,24 @@ const googleRedirect = async (req, res) => {
             Authorization: `Bearer ${tokenData.data.access_token}`,
         },
     });
-    const { name, email } = userData.data;
-    const user = await User.findOne({ email });
+    const { email } = userData.data;
+    let user = await User.findOne({ email });
     const avatarURL = gravatar.url(email);
-    // const payload = { id: user._id };
-    // const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
-
-
+    
   if (!user) {
-    await User.create({
-    name,
+    user = await User.create({
     email,
     avatarURL,
   });
     };
-    console.log(user);
 
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
-  await User.findByIdAndUpdate(user._id, { token });
+  user = await User.findByIdAndUpdate(user._id, { token });
 
     return res.redirect(
         `${process.env.FRONTEND_URL}?token=${token}`
-    )/* .json({
-    status: "success",
-    code: 200,
-    data: {
-      token,
-      balance,
-    },
-  }) */
+    )
 };
 
 module.exports = {
