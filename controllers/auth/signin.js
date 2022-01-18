@@ -30,6 +30,7 @@ const signin = async (req, res) => {
     data: {
       token,
       balance,
+      email
     },
   });
 };
