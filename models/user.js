@@ -5,7 +5,7 @@ const userSchema = Schema(
   {
     password: {
       type: String,
-      required: [true, "Password is required"],
+      // required: [true, "Password is required"],
     },
     email: {
       type: String,
@@ -45,10 +45,16 @@ const joiLoginSchema = Joi.object({
   email: Joi.string().email().required(),
 });
 
+const joiGoogleSchema = Joi.object({
+  email: Joi.string().email(),
+  subscription: Joi.string(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
   User,
   joiRegisterSchema,
   joiLoginSchema,
+  joiGoogleSchema,
 };

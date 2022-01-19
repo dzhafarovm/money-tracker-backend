@@ -22,7 +22,7 @@ const updateAvatar = async (req, res) => {
       avatarURL,
     });
   } catch (error) {
-    await fs.unlink(tempUpload);
+    await fs.unlink(tmpUpload);
     throw error;
   }
 };
