@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const transactionSchema = Schema(
+const transactionSchema = new Schema(
   {
     type: {
       type: String,
@@ -44,6 +44,11 @@ const transactionSchema = Schema(
       default: "salary",
     },
     sum: { type: Number, require: true },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'authUser',
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
