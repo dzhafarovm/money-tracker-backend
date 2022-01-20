@@ -13,5 +13,5 @@ router.patch(
   upload.single("avatar"),
   ctrlWrapper(ctrl.updateAvatar)
 );
-
+router.patch("/balance", auth, ctrlWrapper(ctrl.updateBalance));
 module.exports = router;
