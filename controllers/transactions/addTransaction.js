@@ -42,7 +42,6 @@ const addTransaction = async (req, res) => {
     code: 201,
     data: {
       result,
-      balance,
     },
   });
 };
