@@ -5,7 +5,7 @@ const gravatar = require("gravatar");
 const { User } = require("../../models");
 
 const signup = async (req, res) => {
-  const { password, email, subscription, balance } = req.body;
+  const { password, email } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
@@ -19,7 +19,6 @@ const signup = async (req, res) => {
   await User.create({
     email,
     password: hashPassword,
-    subscription,
     avatarURL,
   });
 
@@ -29,7 +28,6 @@ const signup = async (req, res) => {
     data: {
       user: {
         email,
-        subscription,
         avatarURL,
       },
     },

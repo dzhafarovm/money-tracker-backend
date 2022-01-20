@@ -12,11 +12,7 @@ const userSchema = Schema(
       required: [true, "Email is required"],
       unique: true,
     },
-    subscription: {
-      type: String,
-      enum: ["starter", "pro", "business"],
-      default: "starter",
-    },
+  
     token: {
       type: String,
       default: null,
@@ -36,7 +32,6 @@ const userSchema = Schema(
 const joiRegisterSchema = Joi.object({
   password: Joi.string().min(6).required(),
   email: Joi.string().email().required(),
-  subscription: Joi.string(),
   balance: Joi.number(),
 });
 
@@ -47,7 +42,6 @@ const joiLoginSchema = Joi.object({
 
 const joiGoogleSchema = Joi.object({
   email: Joi.string().email(),
-  subscription: Joi.string(),
 });
 
 const User = model("user", userSchema);
