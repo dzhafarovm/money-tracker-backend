@@ -1,27 +1,46 @@
-const { NotFound } = require("http-errors");
 const { Transaction } = require("../../models");
 
 const getTransactionByMonth = async (req, res) => {
-    const { month, year } = req.params;
     const { _id } = req.user;
+    const { month, year } = req.query;
 
-    const data = await Transaction.find({
+    const userFilter = {
         owner: _id,
-        'month': month,
-        'year': year,
-    });
+        'month':month,
+        'year':year,
+    };
 
-    if (!data) {
-        throw new NotFound(`Not authorized`);
-    };        
+    // const incomeTransactions = await Transaction.aggregate([
+    //     { $match: { ...userFilter, type: "income" } },
+    //     { $group: { _id: { month: { $month: '$month' }, year: { $year: '$year' } }, total: { $sum: '$sum' } } },
+    //     { $sort: { '_id.year': -1, '_id.month': -1 } },
+    // ]).limit(6);
+    
+    // const costsTransactions = await Transaction.aggregate([
+    //     { $match: { ...userFilter, type: "costs" } },
+    //     { $group: { _id: { month: { $month: '$month' }, year: { $year: '$year' } }, total: { $sum: '$sum' } } },
+    //     { $sort: { '_id.year': -1, '_id.month': -1 } },
+    // ]).limit(6);
 
-    const result = data.filter((e) => e.month === month || e.year === year);
+    const incomeTransactions = await Transaction.aggregate([
+        { $match: { ...userFilter, type: "income" } },
+        { $sort: { '_id.year': -1, '_id.month': -1 } },
+    ])
+
+    const costsTransactions = await Transaction.aggregate([
+        { $match: { ...userFilter, type: "costs" } },
+        { $sort: { '_id.year': -1, '_id.month': -1 } },
+    ])
+    
 
     res.json({
         status: "success",
         code: 200,
-        result
-    })
-}
+        data: {
+            incomeTransactions,
+            costsTransactions
+        }
+    });
+};
 
 module.exports = getTransactionByMonth;

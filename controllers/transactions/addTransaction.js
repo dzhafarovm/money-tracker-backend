@@ -1,4 +1,5 @@
 const { Transaction } = require("../../models");
+const { User } = require("../../models");
 
 const addTransaction = async (req, res) => {
   const { _id, balance } = req.user;
