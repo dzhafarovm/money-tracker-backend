@@ -1,27 +1,38 @@
-const { NotFound } = require("http-errors");
 const { Transaction } = require("../../models");
 
 const getTransactionByMonth = async (req, res) => {
-    const { month, year } = req.params;
     const { _id } = req.user;
+    const { month, year } = req.query;
 
-    const data = await Transaction.find({
+    const userFilter = {
         owner: _id,
-        'month': month,
-        'year': year,
-    });
+        month,
+        year,
+    };
+    console.log(userFilter);
+    const incomeTransactions = await Transaction.aggregate([
+        { $match: { ...userFilter, type: "income" } },
+        { $group: { _id: { month: { $month: '$month' }, year: { $year: '$year' } }, total: { $sum: '$sum' } } },
+        { $sort: { '_id.year': -1, '_id.month': -1 } },
+        
+    ]).limit(6);
+    
+    const costsTransactions = await Transaction.aggregate([
+        { $match: { ...userFilter, type: "costs" } },
+        { $group: { _id: { month: { $month: '$month' }, year: { $year: '$year' } }, total: { $sum: '$sum' } } },
+        { $sort: { '_id.year': -1, '_id.month': -1 } },
+    ]).limit(6);
 
-    if (!data) {
-        throw new NotFound(`Not authorized`);
-    };        
-
-    const result = data.filter((e) => e.month === month || e.year === year);
+    
 
     res.json({
         status: "success",
         code: 200,
-        result
-    })
-}
+        data: {
+            incomeTransactions,
+            costsTransactions,
+        }
+    });
+};
 
 module.exports = getTransactionByMonth;
