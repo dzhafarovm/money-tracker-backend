@@ -6,6 +6,7 @@ const { users: ctrl } = require("../../controllers");
 const router = express.Router();
 
 router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
+router.get("/currentbalance", auth, ctrlWrapper(ctrl.getCurrentBalance));
 
 router.patch(
   "/avatars",
