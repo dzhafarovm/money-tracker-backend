@@ -38,10 +38,13 @@ const addTransaction = async (req, res) => {
     month: month,
     year: year,
   });
+  const resultNewBalance = await User.findById(req.user._id);
+  const showResultBalance = resultNewBalance.balance;
   res.status(201).json({
     status: "success",
     code: 201,
     data: result,
+    showResultBalance,
   });
 };
 
