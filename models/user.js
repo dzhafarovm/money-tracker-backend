@@ -12,7 +12,7 @@ const userSchema = Schema(
       required: [true, "Email is required"],
       unique: true,
     },
-  
+
     token: {
       type: String,
       default: null,
@@ -23,7 +23,7 @@ const userSchema = Schema(
     },
     balance: {
       type: Number,
-      default: 0,
+      default: null,
     },
   },
   { versionKey: false, timestamps: true }
