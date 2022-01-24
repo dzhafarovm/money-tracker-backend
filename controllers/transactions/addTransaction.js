@@ -3,8 +3,7 @@ const { User } = require("../../models");
 
 const addTransaction = async (req, res) => {
   const { _id, balance } = req.user;
-  const { type, sum, day, month, year } = req.body;
-
+  const { type, sum } = req.body;
   let newBalance;
   if (type === "income") {
     newBalance = Number(balance) + Number(sum);
