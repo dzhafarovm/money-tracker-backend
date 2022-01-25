@@ -123,6 +123,62 @@
           "400": { "description": "Bad request", "conten": {} }
         }
       }
+    },
+    "users/currentbalance": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "User information",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "applcation/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserBalanceResponse"
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad request", "conten": {} }
+        }
+      }
+    },
+    "users/balance": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update user's balance",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Balance object",
+          "required": "true",
+          "content": {
+            "applcation/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCurrentUserBalanceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "applcation/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCurrentUserBalanceResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -150,10 +206,6 @@
             "type": "string",
             "description": "User's email",
             "format": "email"
-          },
-          "avatarURL": {
-            "type": "string",
-            "description": "User's avatar"
           }
         }
       },
@@ -182,11 +234,7 @@
             "format": "email"
           },
           "token": { "type": "string", "description": "User's token" },
-          "balance": { "type": "integer", "description": "User's balance" },
-          "avatarURL": {
-            "type": "string",
-            "description": "User's avatar"
-          }
+          "balance": { "type": "integer", "description": "User's balance" }
         }
       },
       "CurrentUserResponse": {
@@ -198,11 +246,29 @@
             "format": "email"
           },
           "token": { "type": "string", "description": "User's token" },
-          "balance": { "type": "integer", "description": "User's balance" },
-          "avatarURL": {
-            "type": "string",
-            "description": "User's avatar"
+          "balance": { "type": "integer", "description": "User's balance" }
+        }
+      },
+      "CurrentUserBalanceResponse": {
+        "type": "object",
+        "properties": {
+          "balance": { "type": "integer", "description": "User's balance" }
+        }
+      },
+      "UpdateCurrentUserBalanceRequest": {
+        "type": "object",
+        "required": ["balance"],
+        "properties": {
+          "email": {
+            "type": "integfer",
+            "description": "User's balance"
           }
+        }
+      },
+      "UpdateCurrentUserBalanceResponse": {
+        "type": "object",
+        "properties": {
+          "balance": { "type": "integer", "description": "User's balance" }
         }
       }
     },
