@@ -1,0 +1,23 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.1",
+    "title": "swagger-money",
+    "description": "Showing swagger-ui-express",
+    "licence": { "name": "GoIt", "URL": "GOIT.com" }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [
+    { "url": "https://teamproj-money-tracker.herokuapp.com" },
+    { "url": "http://localhost:8787/api" }
+  ],
+  "tags": [
+    { "name": "Auth", "description": "Authorization endpoints" },
+    { "name": "Users", "description": "Users endpoints" },
+    { "name": "Transactions", "description": "Transactions endpoints" }
+  ],
+  "paths": {
+    "auth/signup": {}
+  }
+}

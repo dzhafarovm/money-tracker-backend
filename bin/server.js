@@ -7,7 +7,7 @@ const { DB_HOST, PORT = 8787 } = process.env;
 mongoose
   .connect(DB_HOST)
   .then(() => {
-    console.log("Database connection successful");
+    console.log("Database connection successful at http://localhost:8787/api/");
     return app.listen(PORT);
   })
   .catch((error) => {
