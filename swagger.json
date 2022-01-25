@@ -23,7 +23,6 @@
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Registration's object",
           "required": "true",
@@ -47,6 +46,79 @@
           "409": {
             "description": "Provided email already in base",
             "content": {}
+          },
+          "400": { "description": "Bad request", "conten": {} }
+        }
+      }
+    },
+    "auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User authorization",
+        "parameters": [],
+        "requestBody": {
+          "description": "Authorization's object",
+          "required": "true",
+          "content": {
+            "applcation/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "applcation/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationRsponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "400": { "description": "Bad request", "conten": {} }
+        }
+      }
+    },
+    "auth/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "Successful operation",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "400": { "description": "Bad request", "conten": {} }
+        }
+      }
+    },
+    "users/current": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "User information",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "applcation/json": {
+                "schema": { "$ref": "#/components/schemas/CurrentUserResponse" }
+              }
+            }
           },
           "400": { "description": "Bad request", "conten": {} }
         }
@@ -79,6 +151,54 @@
             "description": "User's email",
             "format": "email"
           },
+          "avatarURL": {
+            "type": "string",
+            "description": "User's avatar"
+          }
+        }
+      },
+      "AuthorizationRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "123456"
+          }
+        }
+      },
+      "AuthorizationResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "token": { "type": "string", "description": "User's token" },
+          "balance": { "type": "integer", "description": "User's balance" },
+          "avatarURL": {
+            "type": "string",
+            "description": "User's avatar"
+          }
+        }
+      },
+      "CurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "token": { "type": "string", "description": "User's token" },
+          "balance": { "type": "integer", "description": "User's balance" },
           "avatarURL": {
             "type": "string",
             "description": "User's avatar"
