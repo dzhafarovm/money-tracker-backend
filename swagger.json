@@ -39,7 +39,9 @@
             "description": "Successful operation",
             "content": {
               "applcation/json": {
-                "schema": { "$ref": "#/components/schemas/RegistrationRsponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
               }
             }
           },
@@ -294,7 +296,7 @@
             "description": "Successful operation",
             "content": {
               "applcation/json": {
-                "schema": { "$ref": "#/components/schemas/GetByTypehResponse" }
+                "schema": { "$ref": "#/components/schemas/GetByTypeResponse" }
               }
             }
           },
