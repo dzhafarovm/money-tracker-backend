@@ -73,7 +73,7 @@
             "content": {
               "applcation/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthorizationRsponse"
+                  "$ref": "#/components/schemas/AuthorizationResponse"
                 }
               }
             }
@@ -179,6 +179,67 @@
           }
         }
       }
+    },
+    "transactions/": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Adding transaction",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Transaction's object",
+          "required": "true",
+          "content": {
+            "applcation/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddigTransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "applcation/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddigTransactionResponse"
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad request", "conten": {} }
+        }
+      }
+    },
+    "transactions/:transactionId": {
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Deleting transaction",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "transactionId",
+            "required": "true",
+            "type": "string",
+            "description": "Id of transaction to delete"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "202": {
+            "description": "Successful operation",
+            "content": {
+              "applcation/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletingTransactionResponse"
+                }
+              }
+            }
+          },
+          "404": { "description": "Not found", "conten": {} }
+        }
+      }
     }
   },
   "components": {
@@ -270,6 +331,143 @@
         "properties": {
           "balance": { "type": "integer", "description": "User's balance" }
         }
+      },
+      "AddigTransactionRequest": {
+        "type": "object",
+        "required": [
+          "type",
+          "day",
+          "month",
+          "year",
+          "description",
+          "category",
+          "sum",
+          "owner"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of transaction",
+            "enum": ["income", "costs"]
+          },
+          "day": {
+            "type": "string",
+            "description": "Day of transaction",
+            "example": "01"
+          },
+          "month": {
+            "type": "string",
+            "description": "Month of transaction",
+            "example": "01"
+          },
+          "year": {
+            "type": "string",
+            "description": "Year of transaction",
+            "example": "2022"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of transaction",
+            "example": "Свинина"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of transaction",
+            "enum": [
+              "salary",
+              "other income",
+              "products",
+              "alcohol",
+              "fun",
+              "health",
+              "transport",
+              "home",
+              "technic",
+              "utility and phone",
+              "sport and hobby",
+              "education",
+              "other"
+            ]
+          },
+          "sum": {
+            "type": "integer",
+            "description": "Count of transaction",
+            "example": "200"
+          },
+          "owner": {
+            "type": "ObjectId",
+            "description": "Id of transaction's owner",
+            "example": "1q24eei1746e7"
+          }
+        }
+      },
+      "AddigTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of transaction",
+            "enum": ["income", "costs"]
+          },
+          "day": {
+            "type": "string",
+            "description": "Day of transaction",
+            "example": "01"
+          },
+          "month": {
+            "type": "string",
+            "description": "Month of transaction",
+            "example": "01"
+          },
+          "year": {
+            "type": "string",
+            "description": "Year of transaction",
+            "example": "2022"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of transaction",
+            "example": "Свинина"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of transaction",
+            "enum": [
+              "salary",
+              "other income",
+              "products",
+              "alcohol",
+              "fun",
+              "health",
+              "transport",
+              "home",
+              "technic",
+              "utility and phone",
+              "sport and hobby",
+              "education",
+              "other"
+            ]
+          },
+          "sum": {
+            "type": "integer",
+            "description": "Count of transaction",
+            "example": "200"
+          },
+          "owner": {
+            "type": "ObjectId",
+            "description": "Id of transaction's owner",
+            "example": "1q24eei1746e7"
+          },
+          "showResultBalance": {
+            "type": "integer",
+            "description": "Updated balance of owner",
+            "example": "220"
+          }
+        }
+      },
+      "DeletingTransactionResponse": {
+        "type": "string",
+        "content": "transaction deleted"
       }
     },
     "securitySchemes": {
