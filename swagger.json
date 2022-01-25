@@ -230,7 +230,7 @@
           "202": {
             "description": "Successful operation",
             "content": {
-              "applcation/json": {
+              "message": {
                 "schema": {
                   "$ref": "#/components/schemas/DeletingTransactionResponse"
                 }
