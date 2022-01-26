@@ -22,10 +22,13 @@ app.use(express.static("public"));
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/transactions", transactionsRouter);
+
 app.use("/link", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/link.html"));
 });
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
